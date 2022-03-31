@@ -13,7 +13,7 @@ public interface IGestorEmpleadoService {
 
 	Vehiculo buscarVehiculo(String placa);
 
-	void retirarVehiculoReservado(String numeroReserva);
+	String retirarVehiculoReservado(String numeroReserva);
 
 	void retirarVehiculoSinReserva();
 

@@ -1,7 +1,6 @@
 package ec.edu.uce.modelo;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,8 +31,8 @@ public class Vehiculo {
 	@Column(name = "vehi_marca")
 	private String marca;
 
-	@Column(name = "vehi_anio_fabricacion", columnDefinition = "TIMESTAMP")
-	private LocalDateTime anioFabricacion;
+	@Column(name = "vehi_anio_fabricacion")
+	private String anioFabricacion;
 
 	@Column(name = "vehi_pais_fabricacion")
 	private String pais;
@@ -51,7 +50,97 @@ public class Vehiculo {
 	private String estado;
 
 	@ManyToOne
-	@JoinColumn(name = "clie_id")
-	private Cliente clienteRenta;
+	@JoinColumn(name = "rese_id")
+	private Reserva reservaVehiculo;
+
+	// gets and sets
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getAnioFabricacion() {
+		return anioFabricacion;
+	}
+
+	public void setAnioFabricacion(String anioFabricacion) {
+		this.anioFabricacion = anioFabricacion;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getCilindraje() {
+		return cilindraje;
+	}
+
+	public void setCilindraje(String cilindraje) {
+		this.cilindraje = cilindraje;
+	}
+
+	public BigDecimal getAvaluo() {
+		return avaluo;
+	}
+
+	public void setAvaluo(BigDecimal avaluo) {
+		this.avaluo = avaluo;
+	}
+
+	public BigDecimal getValorPorDia() {
+		return valorPorDia;
+	}
+
+	public void setValorPorDia(BigDecimal valorPorDia) {
+		this.valorPorDia = valorPorDia;
+	}
+
+	public Reserva getReservaVehiculo() {
+		return reservaVehiculo;
+	}
+
+	public void setReservaVehiculo(Reserva reservaVehiculo) {
+		this.reservaVehiculo = reservaVehiculo;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 
 }

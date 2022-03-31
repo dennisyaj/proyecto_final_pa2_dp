@@ -1,5 +1,7 @@
 package ec.edu.uce.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -9,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import ec.edu.uce.modelo.Vehiculo;
 
-@Repository
 @Transactional
+@Repository
 public class VehiculoRepoImpl implements IVehiculoRepo {
 
 	@PersistenceContext
@@ -41,7 +43,16 @@ public class VehiculoRepoImpl implements IVehiculoRepo {
 		TypedQuery<Vehiculo> myQuery = this.entityManager.createQuery("SELECT v FROM Vehiculo v WHERE v.placa=: placa",
 				Vehiculo.class);
 		myQuery.setParameter("placa", placa);
-		return null;
+		return myQuery.getSingleResult();
+	}
+
+	@Override
+	public List<Vehiculo> buscarMarcaModelo(String marca, String modelo) {
+		TypedQuery<Vehiculo> myQuery = this.entityManager
+				.createQuery("SELECT v FROM Vehiculo v WHERE v.marca=: marca AND v.modelo=:modelo", Vehiculo.class);
+		myQuery.setParameter("marca", marca);
+		myQuery.setParameter("modelo", modelo);
+		return myQuery.getResultList();
 	}
 
 }
