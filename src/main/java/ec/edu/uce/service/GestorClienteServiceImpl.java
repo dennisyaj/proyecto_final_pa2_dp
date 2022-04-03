@@ -40,6 +40,16 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 	@Override
 	public List<Vehiculo> buscarVehiculosDisponibles(String marca, String modelo) {
 		List<Vehiculo> lista = this.iVehiculoService.buscarMarcaModelo(marca, modelo);
+
+		for (Vehiculo vehiculo : lista) {
+			System.out.println(vehiculo.getEstado());
+			if (vehiculo.getEstado().compareTo("D") == 0) {
+				vehiculo.setEstado("Disponible");
+			} else {
+				vehiculo.setEstado("No Disponible");
+			}
+		}
+
 		return lista;
 	}
 
@@ -91,6 +101,8 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 			}
 
 			// this.iVehiculoService.actualizar(vehiculo);
+		} else {
+			LOG.warn("Fecha no disponible");
 		}
 
 	}

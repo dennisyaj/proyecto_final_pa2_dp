@@ -48,11 +48,8 @@ public class ProyectoFinalPa2DpApplication implements CommandLineRunner {
 //		List<Vehiculo> lista = this.iGestorClienteService.buscarVehiculosDisponibles("KIA", "HashBack");
 //		lista.forEach(System.out::println);
 
-		this.iGestorClienteService.reservarVehiculo("FBI-4567", "1726868886", LocalDateTime.now(),
-				LocalDateTime.of(2022, Month.APRIL, 2, 0,0));
-//
-//		this.iGestorClienteService.reservarVehiculo("FBI-456", "1726868886", LocalDateTime.of(2022, Month.APRIL, 9, 0,0),
-//				LocalDateTime.of(2022, Month.APRIL, 11, 0,0));
+//		this.iGestorClienteService.reservarVehiculo("FBI-456", "1726868886", LocalDateTime.of(2022, Month.APRIL, 12, 0,0),
+//				LocalDateTime.of(2022, Month.APRIL, 13, 0,0));
 	}
 
 }
