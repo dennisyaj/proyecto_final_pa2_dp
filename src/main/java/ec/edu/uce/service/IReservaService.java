@@ -5,6 +5,7 @@ import java.util.List;
 
 import ec.edu.uce.modelo.ReporteReservas;
 import ec.edu.uce.modelo.Reserva;
+import ec.edu.uce.modelo.Vehiculo;
 
 public interface IReservaService {
 
@@ -18,5 +19,9 @@ public interface IReservaService {
 
 	Reserva buscarPorNumero(String numero);
 
+	List<Reserva> buscarPorVehiculo(Vehiculo vehiculo);
+
 	List<ReporteReservas> reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
+
+	List<Reserva> todasReservas();
 }

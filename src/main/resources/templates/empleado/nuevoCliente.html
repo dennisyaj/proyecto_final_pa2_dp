@@ -15,7 +15,7 @@
 	<div class=container my-5>
 		<h3>Ingresar Cliente</h3>
 		<div class="card-body">
-			<form th:action="@{/clientes/insertarCliente}" th:object="${cliente}" method="post">
+			<form th:action="@{/empleados/insertarCliente}" th:object="${cliente}" method="post">
 				<table class="table table-bordered">
 					<tr>
 						<td>
@@ -62,7 +62,7 @@
 							<input type="radio" id="gen1" name="genero" value="M" th:field="*{genero}"> Masculino
 							<input type="radio" id="gen2" name="genero" value="F" th:field="*{genero}"> Femenino
 							<input type="radio" id="gen3" name="genero" value="O" th:field="*{genero}" required checked>
-							Otro
+							Prefiero no responder
 						</td>
 					</tr>
 

@@ -17,8 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 @Entity
 @Table(name = "reserva")
 public class Reserva {
@@ -41,21 +39,13 @@ public class Reserva {
 	@Column(name = "rese_estado")
 	private Character estado;
 
-	@Column(name = "rese_valor_subtotal")
-	private BigDecimal valorSubTotal;
-
-	@Column(name = "rese_valor_IVA")
-	private BigDecimal valorIVA;
-
-	@Column(name = "rese_valor_total_pagar")
-	private BigDecimal valorTotalAPagar;
-
 	@ManyToOne
 	@JoinColumn(name = "clie_id")
 	private Cliente clienteReserva;
 
-	@OneToMany(mappedBy = "reservaVehiculo", cascade = CascadeType.ALL)
-	private List<Vehiculo> vehiculoReservado;
+	@ManyToOne
+	@JoinColumn(name = "vehi_id")
+	private Vehiculo vehiculoReservado;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pago_id")
@@ -109,44 +99,27 @@ public class Reserva {
 		this.clienteReserva = clienteReserva;
 	}
 
-	public BigDecimal getValorSubTotal() {
-		return valorSubTotal;
-	}
-
-	public void setValorSubTotal(BigDecimal valorSubTotal) {
-		this.valorSubTotal = valorSubTotal;
-	}
-
-	public BigDecimal getValorIVA() {
-		return valorIVA;
-	}
-
-	public void setValorIVA(BigDecimal valorIVA) {
-		this.valorIVA = valorIVA;
-	}
-
-	public BigDecimal getValorTotalAPagar() {
-		return valorTotalAPagar;
-	}
-
-	public void setValorTotalAPagar(BigDecimal valorTotalAPagar) {
-		this.valorTotalAPagar = valorTotalAPagar;
-	}
-
-	public List<Vehiculo> getVehiculoReservado() {
-		return vehiculoReservado;
-	}
-
-	public void setVehiculoReservado(List<Vehiculo> vehiculoReservado) {
-		this.vehiculoReservado = vehiculoReservado;
-	}
-
 	public Pago getPagos() {
 		return pagos;
 	}
 
 	public void setPagos(Pago pagos) {
 		this.pagos = pagos;
+	}
+
+	public Vehiculo getVehiculoReservado() {
+		return vehiculoReservado;
+	}
+
+	public void setVehiculoReservado(Vehiculo vehiculoReservado) {
+		this.vehiculoReservado = vehiculoReservado;
+	}
+
+	@Override
+	public String toString() {
+		return "Reserva [id=" + id + ", numero=" + numero + ", fechaInicio=" + fechaInicio + ", fechaFinal="
+				+ fechaFinal + ", estado=" + estado + ", clienteReserva=" + clienteReserva + ", vehiculoReservado="
+				+ vehiculoReservado + ", pagos=" + pagos + "]";
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.Cliente;
 import ec.edu.uce.modelo.Reserva;
+import ec.edu.uce.modelo.RetirarVehiculoTO;
 import ec.edu.uce.modelo.Vehiculo;
 
 @Service
@@ -36,6 +37,7 @@ public class GestorEmpleadoServiceImpl implements IGestorEmpleadoService {
 
 	@Override
 	public void ingresarVehiculo(Vehiculo vehiculo) {
+		vehiculo.setEstado("D");
 		this.iVehiculoService.insertar(vehiculo);
 
 	}
@@ -45,12 +47,39 @@ public class GestorEmpleadoServiceImpl implements IGestorEmpleadoService {
 		return this.iVehiculoService.buscarPorPlaca(placa);
 	}
 
+//	@Override
+//	@Transactional
+//	public RetirarVehiculoTO retirarVehiculoReservado(String numeroReserva) {
+//		Reserva reserva = this.iReservaService.buscarPorNumero(numeroReserva);
+//		Cliente cliente = this.iClienteService.buscar(reserva.getClienteReserva().getId());
+//		Vehiculo vehiculo = this.iVehiculoService.buscar(reserva.getVehiculoReservado().getId());
+//
+//		String estado = (vehiculo.getEstado() == "D") ? "Disponible" : "No Disponible";
+//		String resultado = "Placa: " + vehiculo.getPlaca() + " - Modelo: " + vehiculo.getModelo() + " - Estado: "
+//				+ estado + " - Fecha: " + reserva.getFechaInicio().getDayOfMonth() + "/"
+//				+ reserva.getFechaInicio().getMonthValue() + "/" + reserva.getFechaInicio().getYear() + "-"
+//				+ reserva.getFechaFinal().getDayOfMonth() + "/" + reserva.getFechaFinal().getMonthValue() + "/"
+//				+ reserva.getFechaFinal().getYear() + " - Reservado por: " + cliente.getCedula();
+//		vehiculo.setEstado("ND");
+//		reserva.setEstado('E');
+////		this.iVehiculoService.actualizar(vehiculo);
+////		this.iReservaService.actualizar(reserva);
+//
+//		return new RetirarVehiculoTO(resultado, numeroReserva);
+//
+//	}
+
 	@Override
-	@Transactional
-	public String retirarVehiculoReservado(String numeroReserva) {
+	public void retirarVehiculoSinReserva() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public RetirarVehiculoTO generarTexto(String numeroReserva) {
 		Reserva reserva = this.iReservaService.buscarPorNumero(numeroReserva);
 		Cliente cliente = this.iClienteService.buscar(reserva.getClienteReserva().getId());
-		Vehiculo vehiculo = this.iVehiculoService.buscar(reserva.getVehiculoReservado().get(0).getId());
+		Vehiculo vehiculo = this.iVehiculoService.buscar(reserva.getVehiculoReservado().getId());
 
 		String estado = (vehiculo.getEstado() == "D") ? "Disponible" : "No Disponible";
 		String resultado = "Placa: " + vehiculo.getPlaca() + " - Modelo: " + vehiculo.getModelo() + " - Estado: "
@@ -58,19 +87,19 @@ public class GestorEmpleadoServiceImpl implements IGestorEmpleadoService {
 				+ reserva.getFechaInicio().getMonthValue() + "/" + reserva.getFechaInicio().getYear() + "-"
 				+ reserva.getFechaFinal().getDayOfMonth() + "/" + reserva.getFechaFinal().getMonthValue() + "/"
 				+ reserva.getFechaFinal().getYear() + " - Reservado por: " + cliente.getCedula();
+
+		return new RetirarVehiculoTO(resultado, numeroReserva);
+	}
+
+	@Override
+	@Transactional
+	public void retirarVehiculoReservado(String numeroReserva) {
+		Reserva reserva = this.iReservaService.buscarPorNumero(numeroReserva);
+		Vehiculo vehiculo = this.iVehiculoService.buscar(reserva.getVehiculoReservado().getId());
 		vehiculo.setEstado("ND");
 		reserva.setEstado('E');
 		this.iVehiculoService.actualizar(vehiculo);
 		this.iReservaService.actualizar(reserva);
-
-		return resultado;
-
-	}
-
-	@Override
-	public void retirarVehiculoSinReserva() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

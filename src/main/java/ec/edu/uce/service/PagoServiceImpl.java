@@ -31,5 +31,9 @@ public class PagoServiceImpl implements IPagoService {
 	public void borrar(Integer id) {
 		this.iPagoRepo.borrar(id);
 	}
+	
+	public void calcularValorPAgar(Integer id) {
+		this.iPagoRepo.borrar(id);
+	}
 
 }

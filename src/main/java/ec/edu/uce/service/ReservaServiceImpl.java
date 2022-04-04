@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.ReporteReservas;
 import ec.edu.uce.modelo.Reserva;
+import ec.edu.uce.modelo.Vehiculo;
 import ec.edu.uce.repository.IReservaRepo;
 
 @Service
@@ -40,6 +42,7 @@ public class ReservaServiceImpl implements IReservaService {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Reserva buscarPorNumero(String numero) {
 		return this.iReservaRepo.buscarPorNumero(numero);
 	}
@@ -47,6 +50,16 @@ public class ReservaServiceImpl implements IReservaService {
 	@Override
 	public List<ReporteReservas> reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
 		return this.iReservaRepo.reporteReservas(fechaInicio, fechaFinal);
+	}
+
+	@Override
+	public List<Reserva> buscarPorVehiculo(Vehiculo vehiculo) {
+		return this.iReservaRepo.buscarPorVehiculo(vehiculo);
+	}
+
+	@Override
+	public List<Reserva> todasReservas() {
+		return this.iReservaRepo.todasReservas();
 	}
 
 }

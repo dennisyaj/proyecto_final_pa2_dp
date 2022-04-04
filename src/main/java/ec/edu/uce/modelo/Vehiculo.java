@@ -1,7 +1,9 @@
 package ec.edu.uce.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -49,9 +52,8 @@ public class Vehiculo {
 	@Column(name = "vehi_estado")
 	private String estado;
 
-	@ManyToOne
-	@JoinColumn(name = "rese_id")
-	private Reserva reservaVehiculo;
+	@OneToMany(mappedBy = "vehiculoReservado", cascade = CascadeType.ALL)
+	private List<Reserva> reservaVehiculo;
 
 	// gets and sets
 	public Integer getId() {
@@ -126,14 +128,6 @@ public class Vehiculo {
 		this.valorPorDia = valorPorDia;
 	}
 
-	public Reserva getReservaVehiculo() {
-		return reservaVehiculo;
-	}
-
-	public void setReservaVehiculo(Reserva reservaVehiculo) {
-		this.reservaVehiculo = reservaVehiculo;
-	}
-
 	public String getEstado() {
 		return estado;
 	}
@@ -142,5 +136,19 @@ public class Vehiculo {
 		this.estado = estado;
 	}
 
+	public List<Reserva> getReservaVehiculo() {
+		return reservaVehiculo;
+	}
+
+	public void setReservaVehiculo(List<Reserva> reservaVehiculo) {
+		this.reservaVehiculo = reservaVehiculo;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehiculo [id=" + id + ", placa=" + placa + ", modelo=" + modelo + ", marca=" + marca
+				+ ", anioFabricacion=" + anioFabricacion + ", pais=" + pais + ", cilindraje=" + cilindraje + ", avaluo="
+				+ avaluo + ", valorPorDia=" + valorPorDia + ", estado=" + estado + "]";
+	}
 
 }

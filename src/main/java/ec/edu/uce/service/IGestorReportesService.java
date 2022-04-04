@@ -1,12 +1,17 @@
 package ec.edu.uce.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import ec.edu.uce.modelo.Cliente;
+import ec.edu.uce.modelo.ReporteReservas;
+import ec.edu.uce.modelo.Reserva;
 
 public interface IGestorReportesService {
 
-	void reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
+	List<ReporteReservas> reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
 
-	void reporteClientesVIP();
+	List<Cliente> reporteClientesVIP();
 
 	void reporteVehiculodVIP(String mes, String anio);
 }

@@ -1,5 +1,6 @@
 package ec.edu.uce.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,38 +17,42 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-@Table(name = "cliente")
-public class Cliente {
+public class ReporteClienteTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cliente")
-	@SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente", allocationSize = 1)
-	@Column(name = "clie_id")
 	private Integer id;
 
-	@Column(name = "clie_nombre")
 	private String nombre;
 
-	@Column(name = "clie_apellido")
 	private String apellido;
 
-	@Column(name = "clie_cedula")
 	private String cedula;
 
-	@Column(name = "clie_fecha_nacimiento", columnDefinition = "TIMESTAMP")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-//	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private LocalDate fechaNacimiento;
 
-	@Column(name = "clie_genero")
 	private String genero;
 
-	@Column(name = "clie_registro")
 	private Character tipoRegistro;
 
-	@OneToMany(mappedBy = "clienteReserva", cascade = CascadeType.ALL)
-	private List<Reserva> reservas;
+	private BigDecimal valorIVA;
+
+	private BigDecimal valorTotalAPagar;
+
+	public ReporteClienteTO() {
+	}
+
+	public ReporteClienteTO(Integer id, String nombre, String apellido, String cedula, LocalDate fechaNacimiento,
+			String genero, Character tipoRegistro, BigDecimal valorIVA, BigDecimal valorTotalAPagar) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.cedula = cedula;
+		this.fechaNacimiento = fechaNacimiento;
+		this.genero = genero;
+		this.tipoRegistro = tipoRegistro;
+		this.valorIVA = valorIVA;
+		this.valorTotalAPagar = valorTotalAPagar;
+	}
 
 	// gets and set
 	public Integer getId() {
@@ -98,14 +103,6 @@ public class Cliente {
 		this.genero = genero;
 	}
 
-	public List<Reserva> getReservas() {
-		return reservas;
-	}
-
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-	}
-
 	public Character getTipoRegistro() {
 		return tipoRegistro;
 	}
@@ -114,11 +111,20 @@ public class Cliente {
 		this.tipoRegistro = tipoRegistro;
 	}
 
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula
-				+ ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", tipoRegistro=" + tipoRegistro
-				+ "]";
+	public BigDecimal getValorIVA() {
+		return valorIVA;
+	}
+
+	public void setValorIVA(BigDecimal valorIVA) {
+		this.valorIVA = valorIVA;
+	}
+
+	public BigDecimal getValorTotalAPagar() {
+		return valorTotalAPagar;
+	}
+
+	public void setValorTotalAPagar(BigDecimal valorTotalAPagar) {
+		this.valorTotalAPagar = valorTotalAPagar;
 	}
 
 }

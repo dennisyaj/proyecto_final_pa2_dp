@@ -30,6 +30,7 @@ public class VehiculoServicesImpl implements IVehiculoService {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Vehiculo buscar(Integer id) {
 		return this.iVehiculoRepo.buscar(id);
 	}
@@ -46,6 +47,7 @@ public class VehiculoServicesImpl implements IVehiculoService {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Vehiculo buscarPorPlaca(String placa) {
 		return this.iVehiculoRepo.buscarPorPlaca(placa);
 	}

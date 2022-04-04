@@ -1,6 +1,7 @@
 package ec.edu.uce.service;
 
 import ec.edu.uce.modelo.Cliente;
+import ec.edu.uce.modelo.RetirarVehiculoTO;
 import ec.edu.uce.modelo.Vehiculo;
 
 public interface IGestorEmpleadoService {
@@ -13,7 +14,9 @@ public interface IGestorEmpleadoService {
 
 	Vehiculo buscarVehiculo(String placa);
 
-	String retirarVehiculoReservado(String numeroReserva);
+	RetirarVehiculoTO generarTexto(String numeroReserva);
+
+	void retirarVehiculoReservado(String numeroReserva);
 
 	void retirarVehiculoSinReserva();
 

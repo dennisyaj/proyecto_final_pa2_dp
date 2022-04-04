@@ -7,12 +7,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.modelo.Cliente;
+import ec.edu.uce.modelo.RetirarVehiculoTO;
 import ec.edu.uce.modelo.Vehiculo;
 import ec.edu.uce.service.IGestorEmpleadoService;
+import ec.edu.uce.service.IVehiculoService;
 
 @Controller
 @RequestMapping("/empleados/")
@@ -20,10 +23,12 @@ public class EmpleadoController {
 
 	@Autowired
 	private IGestorEmpleadoService iGestorEmpleadoService;
+	@Autowired
+	private IVehiculoService iVehiculoService;
 
 	@GetMapping("clienteNuevo")
 	private String paginaRegistroCliente(Cliente cliente) {
-		return "nuevoCliente";
+		return "empleado/nuevoCliente";
 	}
 
 	@PostMapping("insertarCliente")
@@ -35,16 +40,16 @@ public class EmpleadoController {
 		return "redirect:/empleados/clienteNuevo";
 	}
 
-	@GetMapping("buscar/{cedulaCliente}")
-	public String obtenerUsuario(@PathVariable("cedulaCliente") String cedula, Cliente cliente,Model modelo) {
+	@GetMapping("buscarCliente/{cedulaCliente}")
+	public String obtenerUsuario(@PathVariable("cedulaCliente") String cedula, Cliente cliente, Model modelo) {
 		Cliente c = this.iGestorEmpleadoService.buscarCliente(cedula);
 		modelo.addAttribute("cliente", c);
-		return "cliente";
+		return "empleado/cliente";
 	}
 
 	@GetMapping("vehiculoNuevo")
 	private String paginaRegistroVehiculo(Vehiculo vehiculo) {
-		return "nuevoVehiculo";
+		return "empleado/nuevoVehiculo";
 	}
 
 	@PostMapping("insertarVehiculo")
@@ -56,16 +61,39 @@ public class EmpleadoController {
 		return "redirect:/empleados/vehiculoNuevo";
 	}
 
-	@GetMapping("clienteBuscar")
-	private String paginaRegistroVehiculo(Cliente cliente) {
-		return "buscarCliente";
+////////////funcionalidad d
+
+	@GetMapping("buscarVehiculo")
+	private String buscarVehiculo(Vehiculo vehiculo) {
+		return "buscar";
 	}
 
-	@GetMapping("b/{idCedula}")
-	private String obtenerPaginaAtualizarDatos(@PathVariable("idCedula") String cedula, Cliente cliente, Model modelo) {
+	@GetMapping("vehiculo/{idPlaca}")
+	public String actualizarEstudiante(@PathVariable(name = "idPlaca") String placa, Vehiculo vehiculo, Model modelo) {
+		modelo.addAttribute("vehiculo", this.iVehiculoService.buscarPorPlaca(placa));
+		return "empleado/vehiculoBusquedaPlaca";
 
-		Cliente c = this.iGestorEmpleadoService.buscarCliente(cedula);
-		modelo.addAttribute("clie", c);
-		return "cliente";
+	}
+
+//	@GetMapping("retirar/{idNumero}")
+//	private String paginaRegistroVehiculo(Cliente cliente) {
+//		return "buscarCliente";
+//	}
+
+	@GetMapping("retirar/{idNumero}")
+	private String buscarReservaNumero(@PathVariable(name = "idNumero") String numero, RetirarVehiculoTO retirar,
+			Model modelo) {
+		modelo.addAttribute("textoReserva", this.iGestorEmpleadoService.generarTexto(numero));
+		return "empleado/retirarVehiculo";
+	}
+
+	@PutMapping("actualizar/{idNumero}")
+	public String ejecutarReserva(@PathVariable("idNumero") String numero, Model modelo,
+			RedirectAttributes redirectAttributes) {
+
+		redirectAttributes.addFlashAttribute("mensaje", "Retiro de vehiculo exitoso");
+		this.iGestorEmpleadoService.retirarVehiculoReservado(numero);
+		return "redirect:/empleados/clienteNuevo";
+
 	}
 }

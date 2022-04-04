@@ -28,7 +28,7 @@
 			<tr th:each=" vehiculo : ${listVehiculos}">
 				<form action="#" th:object="${vehiculo}" th:method="delete">
 
-					<td th:text="Placa +${vehiculo.placa}"></td>
+					<td th:text="Placa +${vehiculo.placa}">
 					<td>-</td>
 					<td th:text="Modelo +${vehiculo.modelo}"></td>
 					<td>-</td>

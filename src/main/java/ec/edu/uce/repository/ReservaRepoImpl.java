@@ -55,10 +55,24 @@ public class ReservaRepoImpl implements IReservaRepo {
 	@Override
 	public List<ReporteReservas> reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
 		TypedQuery<ReporteReservas> myQuery = this.entityManager.createQuery(
-				"SELECT NEW ec.edu.uce.modelo.ReporteReservas(r.id,r.numero,r.fechaInicio,r.fechaFinal,r.estado,c.apellido,c.cedula,v.placa,v.marca,v.valorPorDia)FROM Reserva r JOIN r.clienteReserva c JOIN r.vehiculoReservado v WHERE r.fechaInicio>=:fechaInicio AND  r.fechaFinal<=:fechaFinal",
+				"SELECT NEW ec.edu.uce.modelo.ReporteReservas(r.id,r.numero,r.fechaInicio,r.fechaFinal,r.estado,c.apellido,c.cedula,v.placa,v.marca,v.valorPorDia) FROM Reserva r JOIN r.clienteReserva c JOIN r.vehiculoReservado v  WHERE r.fechaInicio>=:fechaInicio AND  r.fechaFinal<=:fechaFinal",
 				ReporteReservas.class);
 		myQuery.setParameter("fechaInicio", fechaInicio);
 		myQuery.setParameter("fechaFinal", fechaFinal);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Reserva> buscarPorVehiculo(Vehiculo vehiculo) {
+		TypedQuery<Reserva> myQuery = this.entityManager
+				.createQuery("SELECT r  FROM Reserva r where r.vehiculoReservado=:vehiculo", Reserva.class);
+		myQuery.setParameter("vehiculo", vehiculo);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Reserva> todasReservas() {
+		TypedQuery<Reserva> myQuery = this.entityManager.createQuery("SELECT r  FROM Reserva r ", Reserva.class);
 		return myQuery.getResultList();
 	}
 
