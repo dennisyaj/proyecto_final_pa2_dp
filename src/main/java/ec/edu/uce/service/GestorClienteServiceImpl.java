@@ -77,7 +77,7 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 
 		reserva.setPagos(pago);
 		reserva.setVehiculoReservado(vehiculo);
-		
+
 		this.iReservaService.insertar(reserva);
 	}
 
@@ -92,16 +92,31 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 	@Transactional(value = TxType.NOT_SUPPORTED)
 	public boolean verificarDisponibilidad(ReservarVehiculoTO reservarVehiculoTO) {
 
-		Vehiculo vehiculo = this.iVehiculoService.buscarPorPlaca(reservarVehiculoTO.getPlaca());
-		LocalDateTime fechaInicio = reservarVehiculoTO.getFechaInicio();
+		if (reservarVehiculoTO.getFechaInicio().isBefore(reservarVehiculoTO.getFechaFinal())
+				&& reservarVehiculoTO.getFechaInicio().isAfter(LocalDateTime.now())) {
 
-		List<Reserva> lista = this.iReservaService.buscarPorVehiculo(vehiculo);
+			Vehiculo vehiculo = this.iVehiculoService.buscarPorPlaca(reservarVehiculoTO.getPlaca());
+			LocalDateTime fechaInicio = reservarVehiculoTO.getFechaInicio();
 
-		if (lista.stream().filter(v -> fechaInicio.isBefore(v.getFechaFinal())).count() > 0) {
-			System.out.println(lista.stream().filter(v -> fechaInicio.isAfter(v.getFechaFinal())).count());
-			return false;
+			List<Reserva> lista = this.iReservaService.buscarPorVehiculo(vehiculo);
+
+			if (lista.stream().filter(v -> fechaInicio.isBefore(v.getFechaFinal())).count() > 0) {
+				System.out.println(lista.stream().filter(v -> fechaInicio.isAfter(v.getFechaFinal())).count());
+				return false;
+			}
+			return true;
 		}
-		return true;
+		return false;
+//		Vehiculo vehiculo = this.iVehiculoService.buscarPorPlaca(reservarVehiculoTO.getPlaca());
+//		LocalDateTime fechaInicio = reservarVehiculoTO.getFechaInicio();
+//
+//		List<Reserva> lista = this.iReservaService.buscarPorVehiculo(vehiculo);
+//
+//		if (lista.stream().filter(v -> fechaInicio.isBefore(v.getFechaFinal())).count() > 0) {
+//			System.out.println(lista.stream().filter(v -> fechaInicio.isAfter(v.getFechaFinal())).count());
+//			return false;
+//		}
+//		return true;
 	}
 
 	@Override

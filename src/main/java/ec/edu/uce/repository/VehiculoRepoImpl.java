@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import ec.edu.uce.modelo.ReporteVehiculosVIPTO;
 import ec.edu.uce.modelo.Vehiculo;
 
 @Transactional

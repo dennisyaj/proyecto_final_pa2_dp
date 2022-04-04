@@ -68,7 +68,7 @@ public class ClienteController {
 
 			return "cliente/pago";
 		} else {
-			redirectAttributes.addFlashAttribute("mensaje", "Vehiculo no disponible");
+			redirectAttributes.addFlashAttribute("mensaje", "Vehiculo no disponible o Fechas incorrectas");
 			return "redirect:/clientes/reservar";
 		}
 

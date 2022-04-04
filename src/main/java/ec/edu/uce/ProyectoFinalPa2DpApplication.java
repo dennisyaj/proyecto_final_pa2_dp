@@ -1,7 +1,10 @@
 package ec.edu.uce;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -13,7 +16,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import ec.edu.uce.modelo.Cliente;
-import ec.edu.uce.modelo.ReporteClienteTO;
+import ec.edu.uce.modelo.ReporteClienteVIPTO;
 import ec.edu.uce.modelo.Reserva;
 import ec.edu.uce.service.IGestorClienteService;
 import ec.edu.uce.service.IGestorEmpleadoService;
@@ -35,7 +38,7 @@ public class ProyectoFinalPa2DpApplication implements CommandLineRunner {
 	@Autowired
 	private IReservaService iReservaService;
 
-	Function<List<Reserva>, List<ReporteClienteTO>> reserva = r -> {
+	Function<List<Reserva>, List<ReporteClienteVIPTO>> reserva = r -> {
 		return null;
 	};
 
@@ -74,11 +77,18 @@ public class ProyectoFinalPa2DpApplication implements CommandLineRunner {
 //				LocalDateTime.of(2023, Month.APRIL, 12, 0, 0)).stream().count());
 
 //		this.iReservaService.todasReservas().forEach(System.out::println);
-//		Map<Cliente, Long> employeesByCity = this.iReservaService.todasReservas().stream()
-//				.collect(Collectors.groupingBy(Reserva::getClienteReserva, Collectors.counting()));
-//		;
+//		Map<Cliente, DoubleSummaryStatistics> employeesByCity = this.iReservaService.todasReservas().parallelStream()
+//				.collect(Collectors.groupingBy(Reserva::getClienteReserva,
+//						Collectors.summarizingDouble(value -> value.getPagos().getValorTotalAPagar().doubleValue())));
+//		List<ReporteClienteVIPTO> lista = new ArrayList<>();
+//
+//		employeesByCity.forEach((key, value) -> {
+//			lista.add(new ReporteClienteVIPTO(key, new BigDecimal(0), new BigDecimal(value.getSum())));
+//		});
 
-//		System.out.println(this.iGestorEmpleadoService.retirarVehiculoReservado("Pilco-FBI-456-2022-4-3").getDato());
+//		List<Object> l = employeesByCity.entrySet().stream().collect(Collectors.toList());
+//		System.out.println(employeesByCity.entrySet().stream().collect(Collectors.toList()).toString());
+//		this.iReservaService.buscarMesAnio("05", "2022").forEach(System.out::println);
 
 	}
 

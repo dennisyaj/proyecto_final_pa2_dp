@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.ReporteReservas;
+import ec.edu.uce.modelo.ReporteVehiculosVIPD;
 import ec.edu.uce.modelo.Reserva;
 import ec.edu.uce.modelo.Vehiculo;
 import ec.edu.uce.repository.IReservaRepo;
@@ -60,6 +61,11 @@ public class ReservaServiceImpl implements IReservaService {
 	@Override
 	public List<Reserva> todasReservas() {
 		return this.iReservaRepo.todasReservas();
+	}
+
+	@Override
+	public List<ReporteVehiculosVIPD> buscarMesAnio(String mes, String anio) {
+		return this.iReservaRepo.buscarMesAnio(mes, anio);
 	}
 
 }

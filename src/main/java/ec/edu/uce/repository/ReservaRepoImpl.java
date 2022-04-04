@@ -1,7 +1,8 @@
 package ec.edu.uce.repository;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,8 +12,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import ec.edu.uce.modelo.Cliente;
 import ec.edu.uce.modelo.ReporteReservas;
+import ec.edu.uce.modelo.ReporteVehiculosVIPD;
 import ec.edu.uce.modelo.Reserva;
 import ec.edu.uce.modelo.Vehiculo;
 
@@ -73,6 +74,18 @@ public class ReservaRepoImpl implements IReservaRepo {
 	@Override
 	public List<Reserva> todasReservas() {
 		TypedQuery<Reserva> myQuery = this.entityManager.createQuery("SELECT r  FROM Reserva r ", Reserva.class);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<ReporteVehiculosVIPD> buscarMesAnio(String mes, String anio) {
+		String fechaS = "01/" + mes + "/" + anio;
+		LocalDate localDate = LocalDate.parse(fechaS, DateTimeFormatter.ofPattern("d/MM/yyyy"));
+		LocalDateTime fecha = localDate.atStartOfDay();
+		TypedQuery<ReporteVehiculosVIPD> myQuery = this.entityManager.createQuery(
+				"SELECT NEW ec.edu.uce.modelo.ReporteVehiculosVIPD(v,sum( p.valorIVA),sum(p.valorTotalAPagar) AS tot) FROM Reserva r JOIN r.vehiculoReservado v JOIN r.pagos p WHERE r.fechaInicio >=:fecha  GROUP BY v ORDER BY tot DESC",
+				ReporteVehiculosVIPD.class);
+		myQuery.setParameter("fecha", fecha);
 		return myQuery.getResultList();
 	}
 

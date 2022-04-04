@@ -3,15 +3,15 @@ package ec.edu.uce.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import ec.edu.uce.modelo.Cliente;
+import ec.edu.uce.modelo.ReporteClienteVIPTO;
 import ec.edu.uce.modelo.ReporteReservas;
-import ec.edu.uce.modelo.Reserva;
+import ec.edu.uce.modelo.ReporteVehiculosVIPD;
 
 public interface IGestorReportesService {
 
 	List<ReporteReservas> reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
 
-	List<Cliente> reporteClientesVIP();
+	List<ReporteClienteVIPTO> reporteClientesVIP();
 
-	void reporteVehiculodVIP(String mes, String anio);
+	List<ReporteVehiculosVIPD> reporteVehiculodVIP(String mes, String anio);
 }

@@ -11,36 +11,39 @@
 
 <body>
 	<dvclass=container my-5>
-		<div class="card-body">
-			<table class="table table-bordered">
-				<!--Fila del ID-->
-				<tr>
-					<td th:text="'ID:'" />
-					<td th:text="${cliente.id}" />
-				</tr>
-				<!--Fila del Nombre-->
-				<tr>
-					<td th:text="'Nombre:'" />
-					<td th:text="${cliente.nombre}" />
-				</tr>
-				<!--Fila del Apellido-->
-				<tr>
-					<td th:text="'Apellido:'" />
-					<td th:text="${cliente.apellido}" />
-				</tr>
-				<tr>
-					<td th:text="'Cedula:'" />
-					<td th:text="${cliente.cedula}" />
-				</tr>
-				<tr>
-					<td th:text="'Fecha Nacimiento:'" />
-					<td th:text="${cliente.fechaNacimiento}" />
-				</tr>
-				<tr>
-					<td th:text="'Genero:'" />
-					<td th:text="${cliente.genero}" />
-				</tr>
-			</table>
+		<div class=container my-5>
+			<h3>Cliente: </h3>
+			<div class="card-body">
+				<table class="table table-bordered">
+					<!--Fila del ID-->
+					<tr>
+						<td th:text="'ID:'" />
+						<td th:text="${cliente.id}" />
+					</tr>
+					<!--Fila del Nombre-->
+					<tr>
+						<td th:text="'Nombre:'" />
+						<td th:text="${cliente.nombre}" />
+					</tr>
+					<!--Fila del Apellido-->
+					<tr>
+						<td th:text="'Apellido:'" />
+						<td th:text="${cliente.apellido}" />
+					</tr>
+					<tr>
+						<td th:text="'Cedula:'" />
+						<td th:text="${cliente.cedula}" />
+					</tr>
+					<tr>
+						<td th:text="'Fecha Nacimiento:'" />
+						<td th:text="${cliente.fechaNacimiento}" />
+					</tr>
+					<tr>
+						<td th:text="'Genero:'" />
+						<td th:text="${cliente.genero}" />
+					</tr>
+				</table>
+			</div>
 		</div>
 </body>
 

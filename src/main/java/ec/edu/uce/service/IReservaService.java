@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import ec.edu.uce.modelo.ReporteReservas;
+import ec.edu.uce.modelo.ReporteVehiculosVIPD;
 import ec.edu.uce.modelo.Reserva;
 import ec.edu.uce.modelo.Vehiculo;
 
@@ -24,4 +25,6 @@ public interface IReservaService {
 	List<ReporteReservas> reporteReservas(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
 
 	List<Reserva> todasReservas();
+
+	List<ReporteVehiculosVIPD> buscarMesAnio(String mes, String anio);
 }
