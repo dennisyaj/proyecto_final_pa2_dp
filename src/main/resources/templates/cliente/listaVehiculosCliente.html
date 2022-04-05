@@ -24,8 +24,8 @@
 			<div th:text="${mensaje}" th:if="${mensaje!=null}">
 			</div>
 			<tr th:each=" vehiculo : ${listVehiculos}">
-				<form action="#" th:object="${vehiculo}" th:method="delete">
-					<td th:text="${vehiculo}">
+				<form action="#">
+					<td th:text=" ${vehiculo}">
 				</form>
 			</tr>
 		</tbody>
