@@ -38,10 +38,6 @@ public class ProyectoFinalPa2DpApplication implements CommandLineRunner {
 	@Autowired
 	private IReservaService iReservaService;
 
-	Function<List<Reserva>, List<ReporteClienteVIPTO>> reserva = r -> {
-		return null;
-	};
-
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoFinalPa2DpApplication.class, args);
 	}

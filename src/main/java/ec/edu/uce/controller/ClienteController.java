@@ -43,7 +43,7 @@ public class ClienteController {
 	@GetMapping("disponiblidad/{marca}/{modelo}")
 	public String buscarVehiculosTodos(@PathVariable("marca") String idMarca, @PathVariable("modelo") String idModelo,
 			Model modelo) {
-		List<Vehiculo> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo);
+		List<String> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo);
 		modelo.addAttribute("listVehiculos", listaVehiculos);
 		return "cliente/listaVehiculosCliente";
 	}
@@ -61,10 +61,10 @@ public class ClienteController {
 
 		if (this.iGestorClienteService.verificarDisponibilidad(reservarVehiculoTO)) {
 			redirectAttributes.addFlashAttribute("mensaje", "Vehiculo disponible");
-			modelo.addAttribute("reservarVehiculoTO", reservarVehiculoTO);
-
 			reservarVehiculoTO.setValorTotalAPagar(this.iGestorClienteService.generarPago(reservarVehiculoTO.getPlaca(),
 					reservarVehiculoTO.getFechaInicio(), reservarVehiculoTO.getFechaFinal()).getValorTotalAPagar());
+			
+			modelo.addAttribute("reservarVehiculoTO", reservarVehiculoTO);
 
 			return "cliente/pago";
 		} else {

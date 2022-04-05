@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.ReporteClienteVIPTO;
 import ec.edu.uce.modelo.ReporteReservas;
-import ec.edu.uce.modelo.ReporteVehiculosVIPD;
+import ec.edu.uce.modelo.ReporteVehiculosVIPTO;
 
 @Service
 public class GestorReportesServiceImpl implements IGestorReportesService {
@@ -60,7 +60,7 @@ public class GestorReportesServiceImpl implements IGestorReportesService {
 
 	@Override
 	@Transactional(value = TxType.NOT_SUPPORTED)
-	public List<ReporteVehiculosVIPD> reporteVehiculodVIP(String mes, String anio) {
+	public List<ReporteVehiculosVIPTO> reporteVehiculodVIP(String mes, String anio) {
 		return this.iReservaService.buscarMesAnio(mes, anio);
 	}
 

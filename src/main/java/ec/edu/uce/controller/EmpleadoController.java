@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.modelo.Cliente;
@@ -49,9 +50,15 @@ public class EmpleadoController {
 		return "redirect:/empleados/clienteNuevo";
 	}
 
-	@GetMapping("buscarCliente/{cedulaCliente}")
-	public String obtenerUsuario(@PathVariable("cedulaCliente") String cedula, Cliente cliente, Model modelo) {
-		Cliente c = this.iGestorEmpleadoService.buscarCliente(cedula);
+	/////////////////////// a
+	@GetMapping("buscar")
+	private String buscarCedulaF(Cliente cliente) {
+		return "buscarCliente";
+	}
+
+	@PostMapping("buscarCliente")
+	public String obtenerUsuario(@RequestParam(name = "cedula") String cedulaCliente, Cliente cliente, Model modelo) {
+		Cliente c = this.iGestorEmpleadoService.buscarCliente(cedulaCliente);
 		modelo.addAttribute("cliente", c);
 		return "empleado/cliente";
 	}
@@ -110,8 +117,8 @@ public class EmpleadoController {
 	@PostMapping("disponiblidad/{marca}/{modelo}")
 	public String buscarVehiculosT(@PathVariable("marca") String idMarca, @PathVariable("modelo") String idModelo,
 			Model modelo) {
-		List<Vehiculo> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo);
-		modelo.addAttribute("listVehiculos", listaVehiculos);
+//		List<Vehiculo> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo);
+//		modelo.addAttribute("listVehiculos", listaVehiculos);
 		return "redirect:/empleados/clienteNuevo";
 	}
 }

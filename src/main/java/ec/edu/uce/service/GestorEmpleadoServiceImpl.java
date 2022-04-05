@@ -47,31 +47,8 @@ public class GestorEmpleadoServiceImpl implements IGestorEmpleadoService {
 		return this.iVehiculoService.buscarPorPlaca(placa);
 	}
 
-//	@Override
-//	@Transactional
-//	public RetirarVehiculoTO retirarVehiculoReservado(String numeroReserva) {
-//		Reserva reserva = this.iReservaService.buscarPorNumero(numeroReserva);
-//		Cliente cliente = this.iClienteService.buscar(reserva.getClienteReserva().getId());
-//		Vehiculo vehiculo = this.iVehiculoService.buscar(reserva.getVehiculoReservado().getId());
-//
-//		String estado = (vehiculo.getEstado() == "D") ? "Disponible" : "No Disponible";
-//		String resultado = "Placa: " + vehiculo.getPlaca() + " - Modelo: " + vehiculo.getModelo() + " - Estado: "
-//				+ estado + " - Fecha: " + reserva.getFechaInicio().getDayOfMonth() + "/"
-//				+ reserva.getFechaInicio().getMonthValue() + "/" + reserva.getFechaInicio().getYear() + "-"
-//				+ reserva.getFechaFinal().getDayOfMonth() + "/" + reserva.getFechaFinal().getMonthValue() + "/"
-//				+ reserva.getFechaFinal().getYear() + " - Reservado por: " + cliente.getCedula();
-//		vehiculo.setEstado("ND");
-//		reserva.setEstado('E');
-////		this.iVehiculoService.actualizar(vehiculo);
-////		this.iReservaService.actualizar(reserva);
-//
-//		return new RetirarVehiculoTO(resultado, numeroReserva);
-//
-//	}
-
 	@Override
 	public void retirarVehiculoSinReserva() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -82,6 +59,7 @@ public class GestorEmpleadoServiceImpl implements IGestorEmpleadoService {
 		Vehiculo vehiculo = this.iVehiculoService.buscar(reserva.getVehiculoReservado().getId());
 
 		String estado = (vehiculo.getEstado() == "D") ? "Disponible" : "No Disponible";
+		
 		String resultado = "Placa: " + vehiculo.getPlaca() + " - Modelo: " + vehiculo.getModelo() + " - Estado: "
 				+ estado + " - Fecha: " + reserva.getFechaInicio().getDayOfMonth() + "/"
 				+ reserva.getFechaInicio().getMonthValue() + "/" + reserva.getFechaInicio().getYear() + "-"

@@ -3,7 +3,6 @@ package ec.edu.uce.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.modelo.ReporteFechasTO;
-import ec.edu.uce.modelo.ReporteVehiculosVIPD;
+import ec.edu.uce.modelo.ReporteVehiculosVIPTO;
 import ec.edu.uce.service.IClienteService;
 import ec.edu.uce.service.IGestorReportesService;
 
@@ -26,9 +25,6 @@ public class ReporteController {
 
 	@Autowired
 	private IGestorReportesService iGestorReportesService;
-
-	@Autowired
-	private IClienteService iClienteService;
 
 	@GetMapping("reservas")
 	private String paginaReporte(ReporteFechasTO reporteFechasTO) {
@@ -57,7 +53,7 @@ public class ReporteController {
 	@GetMapping("vehiculoVip/{idMes}/{idAnio}")
 	public String obtenerReporteMesAnio(@PathVariable("idMes") String mes, @PathVariable("idAnio") String anio,
 			Model modelo) {
-		List<ReporteVehiculosVIPD> listaReporte = this.iGestorReportesService.reporteVehiculodVIP(mes, anio);
+		List<ReporteVehiculosVIPTO> listaReporte = this.iGestorReportesService.reporteVehiculodVIP(mes, anio);
 		modelo.addAttribute("listaVIP", listaReporte);
 		return "reportes/reporteVehiculoVIP";
 	}

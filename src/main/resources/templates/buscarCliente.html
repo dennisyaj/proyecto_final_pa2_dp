@@ -14,7 +14,7 @@
 	<div class=container my-5>
 		<h3>Buscar Cliente por Cedula</h3>
 		<div class="card-body">
-			<form th:action="@{/empleados/buscar/{cedulaCliente}(cedulaCliente=${cliente.cedula})}"
+			<form th:action="@{/empleados/buscarCliente}"
 				th:object="${cliente}" method="post">
 				<table class="table table-bordered">
 					<tr>
@@ -22,11 +22,10 @@
 							<label for="name">Cedula:</label>
 						</td>
 						<td>
-							<input type="text" id="cedula" th:field="*{cedula}" required>
+							<input type="text" id="cedula" th:name="cedula" th:field="*{cedula}" required>
 						</td>
 					</tr>
 				</table>
-				<td><a href="@{/empleados/buscar/{cedulaCliente}(cedulaCliente=${cedula)}">B</a></td>
 				<input type="submit" value="Buscar">
 			</form>
 		</div>

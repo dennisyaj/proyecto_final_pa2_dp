@@ -5,7 +5,7 @@ import java.util.List;
 
 import ec.edu.uce.modelo.ReporteClienteVIPTO;
 import ec.edu.uce.modelo.ReporteReservas;
-import ec.edu.uce.modelo.ReporteVehiculosVIPD;
+import ec.edu.uce.modelo.ReporteVehiculosVIPTO;
 
 public interface IGestorReportesService {
 
@@ -13,5 +13,5 @@ public interface IGestorReportesService {
 
 	List<ReporteClienteVIPTO> reporteClientesVIP();
 
-	List<ReporteVehiculosVIPD> reporteVehiculodVIP(String mes, String anio);
+	List<ReporteVehiculosVIPTO> reporteVehiculodVIP(String mes, String anio);
 }

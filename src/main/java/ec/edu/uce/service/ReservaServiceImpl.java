@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.ReporteReservas;
-import ec.edu.uce.modelo.ReporteVehiculosVIPD;
+import ec.edu.uce.modelo.ReporteVehiculosVIPTO;
 import ec.edu.uce.modelo.Reserva;
 import ec.edu.uce.modelo.Vehiculo;
 import ec.edu.uce.repository.IReservaRepo;
@@ -43,7 +43,6 @@ public class ReservaServiceImpl implements IReservaService {
 	}
 
 	@Override
-	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Reserva buscarPorNumero(String numero) {
 		return this.iReservaRepo.buscarPorNumero(numero);
 	}
@@ -64,7 +63,7 @@ public class ReservaServiceImpl implements IReservaService {
 	}
 
 	@Override
-	public List<ReporteVehiculosVIPD> buscarMesAnio(String mes, String anio) {
+	public List<ReporteVehiculosVIPTO> buscarMesAnio(String mes, String anio) {
 		return this.iReservaRepo.buscarMesAnio(mes, anio);
 	}
 

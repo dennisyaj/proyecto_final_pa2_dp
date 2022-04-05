@@ -3,13 +3,14 @@ package ec.edu.uce.service;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,25 +35,24 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 	@Autowired
 	private IReservaService iReservaService;
 
-	@Autowired
-	private IPagoService iPagoService;
+	private static final Logger LOG = Logger.getRootLogger();
 
-	private static final Logger LOG = LoggerFactory.getLogger(GestorClienteServiceImpl.class);
+	Function<Vehiculo, String> generarVehiculo = vehiculo -> {
+
+		String estado = (vehiculo.getEstado() == "D") ? "Disponible" : "No Disponible";
+		String resultado = "Placa: " + vehiculo.getPlaca() + " - Modelo: " + vehiculo.getModelo() + " - Estado: "
+				+ estado + " - Valor por dia: $" + vehiculo.getValorPorDia();
+		return resultado;
+	};
 
 	@Override
-	public List<Vehiculo> buscarVehiculosDisponibles(String marca, String modelo) {
+	public List<String> buscarVehiculosDisponibles(String marca, String modelo) {
 		List<Vehiculo> lista = this.iVehiculoService.buscarMarcaModelo(marca, modelo);
-
+		List<String> listaTexto = new ArrayList<>();
 		for (Vehiculo vehiculo : lista) {
-			System.out.println(vehiculo.getEstado());
-			if (vehiculo.getEstado().compareTo("D") == 0) {
-				vehiculo.setEstado("Disponible");
-			} else {
-				vehiculo.setEstado("No Disponible");
-			}
+			listaTexto.add(this.generarVehiculo.apply(vehiculo));
 		}
-
-		return lista;
+		return listaTexto;
 	}
 
 	@Override
@@ -70,6 +70,7 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 		reserva.setFechaInicio(fechaInicio);
 		reserva.setNumero(cliente.getApellido() + "-" + vehiculo.getPlaca() + "-" + fechaInicio.getYear() + "-"
 				+ fechaInicio.getMonthValue() + "-" + fechaInicio.getDayOfMonth());
+		
 		Pago pago = this.generarPago(placa, fechaInicio, fechaFinal);
 		pago.setFechaCobro(LocalDateTime.now());
 		pago.setPagoReserva(reserva);
@@ -106,6 +107,7 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 			}
 			return true;
 		}
+
 		return false;
 //		Vehiculo vehiculo = this.iVehiculoService.buscarPorPlaca(reservarVehiculoTO.getPlaca());
 //		LocalDateTime fechaInicio = reservarVehiculoTO.getFechaInicio();

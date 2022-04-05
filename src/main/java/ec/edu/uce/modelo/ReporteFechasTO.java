@@ -7,11 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class ReporteFechasTO {
 
-//	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaInicio;
 
-//	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaFinal;
 
@@ -23,7 +21,7 @@ public class ReporteFechasTO {
 		this.fechaFinal = fechaFinal;
 	}
 
-///geta and sets
+	// get and sets
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
