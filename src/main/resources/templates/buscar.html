@@ -12,17 +12,16 @@
 <body>
 	<div th:text="${mensaje}" th:if="${mensaje!=null}"> </div>
 	<div class=container my-5>
-		<h3>Buscar</h3>
+		<h3>Buscar Vehiculo</h3>
 		<div class="card-body">
-			<form th:action="@{/empleados/vehiculo/{idPlaca}(idPlaca=${vehiculo.placa})}" th:object="${vehiculo}"
-				method="get">
+			<form th:action="@{/empleados/detalleVehiculo}" th:object="${vehiculo}" method="get">
 				<table class="table table-bordered">
 					<tr>
 						<td>
-							<label for="name">Cedula:</label>
+							<label>Placa:</label>
 						</td>
 						<td>
-							<input type="text" id="placa" th:field="*{placa}" required>
+							<input type="text" id="placa" th:name="placa" th:field="*{placa}" required>
 						</td>
 					</tr>
 				</table>

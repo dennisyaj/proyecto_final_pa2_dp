@@ -1,6 +1,5 @@
 package ec.edu.uce.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.modelo.Cliente;
-import ec.edu.uce.modelo.Reserva;
 import ec.edu.uce.modelo.ReservarVehiculoTO;
-import ec.edu.uce.modelo.Vehiculo;
 import ec.edu.uce.service.IGestorClienteService;
 
 @Controller
@@ -43,7 +40,7 @@ public class ClienteController {
 	@GetMapping("disponiblidad/{marca}/{modelo}")
 	public String buscarVehiculosTodos(@PathVariable("marca") String idMarca, @PathVariable("modelo") String idModelo,
 			Model modelo) {
-		List<String> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo);
+		List<String> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponiblesTexto(idMarca, idModelo);
 		modelo.addAttribute("listVehiculos", listaVehiculos);
 		return "cliente/listaVehiculosCliente";
 	}
@@ -63,7 +60,7 @@ public class ClienteController {
 			redirectAttributes.addFlashAttribute("mensaje", "Vehiculo disponible");
 			reservarVehiculoTO.setValorTotalAPagar(this.iGestorClienteService.generarPago(reservarVehiculoTO.getPlaca(),
 					reservarVehiculoTO.getFechaInicio(), reservarVehiculoTO.getFechaFinal()).getValorTotalAPagar());
-			
+
 			modelo.addAttribute("reservarVehiculoTO", reservarVehiculoTO);
 
 			return "cliente/pago";

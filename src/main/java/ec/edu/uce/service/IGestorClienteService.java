@@ -10,7 +10,9 @@ import ec.edu.uce.modelo.Vehiculo;
 
 public interface IGestorClienteService {
 
-	List<String> buscarVehiculosDisponibles(String marca, String modelo);
+	List<String> buscarVehiculosDisponiblesTexto(String marca, String modelo);
+
+	List<Vehiculo> buscarVehiculosDisponibles(String marca, String modelo);
 
 	void reservarVehiculo(String placa, String cedulaCliente, LocalDateTime fechaInicio, LocalDateTime fechaFinal,
 			String numeroTarjeta);

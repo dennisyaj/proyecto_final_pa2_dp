@@ -1,7 +1,5 @@
 package ec.edu.uce.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.modelo.Cliente;
-import ec.edu.uce.modelo.ReporteClienteVIPTO;
-import ec.edu.uce.modelo.ReporteReservas;
+import ec.edu.uce.modelo.ReservarVehiculoTO;
 import ec.edu.uce.modelo.RetirarVehiculoTO;
+import ec.edu.uce.modelo.SinReservaTO;
 import ec.edu.uce.modelo.Vehiculo;
 import ec.edu.uce.service.IGestorClienteService;
 import ec.edu.uce.service.IGestorEmpleadoService;
@@ -53,7 +51,7 @@ public class EmpleadoController {
 	/////////////////////// a
 	@GetMapping("buscar")
 	private String buscarCedulaF(Cliente cliente) {
-		return "buscarCliente";
+		return "empleado/buscarCliente";
 	}
 
 	@PostMapping("buscarCliente")
@@ -84,8 +82,8 @@ public class EmpleadoController {
 		return "buscar";
 	}
 
-	@GetMapping("vehiculo/{idPlaca}")
-	public String actualizarEstudiante(@PathVariable(name = "idPlaca") String placa, Vehiculo vehiculo, Model modelo) {
+	@GetMapping("detalleVehiculo")
+	public String actualizarEstudiante(@RequestParam(name = "placa") String placa, Model modelo) {
 		modelo.addAttribute("vehiculo", this.iVehiculoService.buscarPorPlaca(placa));
 		return "empleado/vehiculoBusquedaPlaca";
 
@@ -107,18 +105,59 @@ public class EmpleadoController {
 		this.iGestorEmpleadoService.retirarVehiculoReservado(numero);
 		return "redirect:/empleados/clienteNuevo";
 	}
-////////////funcionalidad f
 
+////////////funcionalidad f
 	@GetMapping("retirar/sinReserva")
-	private String retirarSinReserva(ReporteReservas reporteReservas) {
+	private String retirarSinReserva(SinReservaTO sinReservaTO, ReservarVehiculoTO reservarVehiculoTO, Model modelo) {
+
+		modelo.addAttribute("visible1", false);
+		modelo.addAttribute("visible2", false);
+		modelo.addAttribute("visible3", false);
 		return "empleado/marcaModelo";
 	}
 
-	@PostMapping("disponiblidad/{marca}/{modelo}")
-	public String buscarVehiculosT(@PathVariable("marca") String idMarca, @PathVariable("modelo") String idModelo,
-			Model modelo) {
-//		List<Vehiculo> listaVehiculos = this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo);
-//		modelo.addAttribute("listVehiculos", listaVehiculos);
-		return "redirect:/empleados/clienteNuevo";
+	@PostMapping("disponiblidad")
+	public String buscarVehiculosT(@RequestParam(name = "marca") String idMarca,
+			@RequestParam(name = "modelo") String idModelo, Model modelo, SinReservaTO sinReservaTO,
+			ReservarVehiculoTO reservarVehiculoTO) {
+
+		modelo.addAttribute("listVehiculos", this.iGestorClienteService.buscarVehiculosDisponibles(idMarca, idModelo));
+		modelo.addAttribute("visible1", true);
+		modelo.addAttribute("visible2", true);
+		modelo.addAttribute("visible3", false);
+		return "empleado/marcaModelo";
 	}
+
+	@PostMapping("buscarReserva")
+	public String insertarReserva(ReservarVehiculoTO reservarVehiculoTO, SinReservaTO sinReservaTO,
+			BindingResult result, Model modelo, RedirectAttributes redirectAttributes) {
+
+		if (this.iGestorClienteService.verificarDisponibilidad(reservarVehiculoTO)) {
+			redirectAttributes.addFlashAttribute("mensaje", "Vehiculo disponible");
+			reservarVehiculoTO.setValorTotalAPagar(this.iGestorClienteService.generarPago(reservarVehiculoTO.getPlaca(),
+					reservarVehiculoTO.getFechaInicio(), reservarVehiculoTO.getFechaFinal()).getValorTotalAPagar());
+
+			modelo.addAttribute("reservarVehiculoTO", reservarVehiculoTO);
+			modelo.addAttribute("visible1", false);
+			modelo.addAttribute("visible2", false);
+			modelo.addAttribute("visible3", true);
+			return "empleado/marcaModelo";
+		} else {
+			redirectAttributes.addFlashAttribute("mensaje", "Vehiculo no disponible o Fechas incorrectas");
+			return "redirect:/empleados/retirar/sinReserva";
+		}
+
+	}
+
+	@PostMapping("insertarPago")
+	public String insertarPago(ReservarVehiculoTO reservarVehiculoTO, SinReservaTO sinReservaTO, BindingResult result,
+			Model modelo, RedirectAttributes redirectAttributes) {
+
+		System.out.println(reservarVehiculoTO.getFechaInicio());
+		System.out.println(reservarVehiculoTO.getFechaFinal());
+		this.iGestorClienteService.crearReserva(reservarVehiculoTO);
+		redirectAttributes.addFlashAttribute("mensaje", "Reservacion Creada");
+		return "redirect:/empleados/retirar/sinReserva";
+	}
+
 }

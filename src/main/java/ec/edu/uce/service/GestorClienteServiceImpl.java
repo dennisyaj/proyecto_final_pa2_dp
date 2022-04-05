@@ -46,13 +46,9 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 	};
 
 	@Override
-	public List<String> buscarVehiculosDisponibles(String marca, String modelo) {
-		List<Vehiculo> lista = this.iVehiculoService.buscarMarcaModelo(marca, modelo);
-		List<String> listaTexto = new ArrayList<>();
-		for (Vehiculo vehiculo : lista) {
-			listaTexto.add(this.generarVehiculo.apply(vehiculo));
-		}
-		return listaTexto;
+	public List<Vehiculo> buscarVehiculosDisponibles(String marca, String modelo) {
+
+		return this.iVehiculoService.buscarMarcaModelo(marca, modelo);
 	}
 
 	@Override
@@ -70,7 +66,7 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 		reserva.setFechaInicio(fechaInicio);
 		reserva.setNumero(cliente.getApellido() + "-" + vehiculo.getPlaca() + "-" + fechaInicio.getYear() + "-"
 				+ fechaInicio.getMonthValue() + "-" + fechaInicio.getDayOfMonth());
-		
+
 		Pago pago = this.generarPago(placa, fechaInicio, fechaFinal);
 		pago.setFechaCobro(LocalDateTime.now());
 		pago.setPagoReserva(reserva);
@@ -149,6 +145,16 @@ public class GestorClienteServiceImpl implements IGestorClienteService {
 				reservarVehiculoTO.getFechaInicio(), reservarVehiculoTO.getFechaFinal(),
 				reservarVehiculoTO.getTarjeta());
 
+	}
+
+	@Override
+	public List<String> buscarVehiculosDisponiblesTexto(String marca, String modelo) {
+		List<Vehiculo> lista = this.iVehiculoService.buscarMarcaModelo(marca, modelo);
+		List<String> listaTexto = new ArrayList<>();
+		for (Vehiculo vehiculo : lista) {
+			listaTexto.add(this.generarVehiculo.apply(vehiculo));
+		}
+		return listaTexto;
 	}
 
 }

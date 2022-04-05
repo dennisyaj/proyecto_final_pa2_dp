@@ -48,7 +48,7 @@ class GestorClienteServiceImplTest {
 		vehiculo.setValorPorDia(new BigDecimal(80));
 
 		this.iVehiculoService.insertar(vehiculo);
-		List<String> lista = this.iGestorClienteService.buscarVehiculosDisponibles("P", "P");
+		List<String> lista = this.iGestorClienteService.buscarVehiculosDisponiblesTexto("P", "P");
 		assertEquals("Placa: A - Modelo: P - Estado: No Disponible - Valor por dia: $80", lista.get(0));
 
 	}
